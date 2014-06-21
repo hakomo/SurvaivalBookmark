@@ -2,12 +2,18 @@
 
 class Mailer {
 
-    private $_message = ""; 
+    private $_message = "";
+    private $_tempDir;
     const EXT = ".txt";
 
+    public function __construct($templateDir){
+        $this->_tempDir = $templateDir;
+    }
+
     // テンプレートをセット
-    public function setTemplate($fileName){
-        $this->_message = file_get_contents(MAIL_TEMPLATE . $fileName . self::EXT);
+    public function setTemplate($fileName, $tempDir = ""){
+        $dir = empty($tempDir) ? $this->_tempDir : $tempDir;
+        $this->_message = file_get_contents($dir . $fileName . self::EXT);
         return $this;
     }
 
